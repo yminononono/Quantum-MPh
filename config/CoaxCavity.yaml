@@ -1,0 +1,28 @@
+parameter:
+  outer_radius         : '8[mm]' # 5[mm], 8[mm] (for 10GHz cut-off)
+  outer_height         : '38[mm]' # 38[mm]
+  coax_radius          : '1.5[mm]' # '1.5[mm]'
+  coax_height          : '9[mm]'
+  antenna_height       : '18[mm]'
+  antenna_radius       : '1.5[mm]'
+  antenna_outer_height : '8[mm]'
+  antenna_outer_radius : '3[mm]'
+  chip_inductance      : '1.4[nH]'
+  chip_gap             : '220[um]' # 20[um]
+  chip_width           : '250[um]' # 250[um]
+  chip_height          : '2000[um]' # 400[um] (For chip_gap : 20[um], galvanic with 3240 ( ~4500 with 45 degree ? ) )
+  chip_theta           : '0[deg]' # 0deg
+  chip_fillet          : '10[um]'
+  chip_pos_z_ratio     : '0.6'
+  chip_pos_z           : 'chip_pos_z_ratio*coax_height'
+  chip_pos_y           : 'coax_radius + 0.5*(outer_radius - coax_radius)'
+  wafer_height         : '0.525[mm]'
+  wafer_width          : '2[mm]'
+  wafer_length         : '6[mm]'
+  box_height           : '40[mm]'
+  box_length           : '2*outer_radius + 10[mm]' #'15[mm]'
+
+  jj_width : '20[um]'
+  jj_height: '16[um]'
+
+  finger_height: '(chip_gap - jj_height)/2'

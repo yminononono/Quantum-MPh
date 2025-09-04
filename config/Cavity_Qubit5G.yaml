@@ -1,0 +1,32 @@
+
+parameter:
+  cavity_width     : '30[mm]'
+  cavity_length    : '7[mm]'
+  cavity_height    : '28[mm]'
+  cavity_fillet    : '2.5[mm]'
+  port_distance    : '12[mm]'
+  port_height      : '7[mm]'
+  port_in_depth    : '4[mm]'
+  port_out_depth   : '6.5[mm]'
+  port_inner_radius: '0.3[mm]'
+  port_outer_radius: '2.1[mm]'
+
+  wafer_space_fillet: '1[mm]'
+  wafer_space_length: '2*cavity_length'
+  wafer_space_height: '0.650[mm]'
+  wafer_space_width : 'wafer_width'
+
+  wafer_height: '0.300[mm]'
+  wafer_width : '3[mm]'
+  wafer_length: 'wafer_space_length - 2*wafer_space_fillet'
+
+  chip_gap       : '200[um]'
+  chip_width     : '500[um]'
+  chip_height    : '600[um]'
+  chip_fillet    : '10[um]'
+  chip_inductance: '9[nH]'
+
+  jj_width : '20[um]'
+  jj_height: '16[um]'
+
+  finger_height: '(chip_gap - jj_height)/2'

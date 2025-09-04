@@ -5,7 +5,7 @@
 import com.comsol.model.*;
 import com.comsol.model.util.*;
 
-/** Model exported on Sep 2 2025, 22:49 by COMSOL 6.3.0.335. */
+/** Model exported on Sep 4 2025, 00:48 by COMSOL 6.3.0.335. */
 public class cav3d5G {
 
   public static Model run() {
@@ -3616,6 +3616,375 @@ public class cav3d5G {
     model.label("cav3d5G.mph");
 
     model.result("pg1").run();
+
+    model.component("comp1").geom("geom1").lengthUnit("\u00b5in");
+    model.component("comp1").geom("geom1").lengthUnit("\u00b5m");
+    model.component("comp1").geom("geom1").feature("wp1").geom().runPre("fil1");
+
+    model.result("pg2").run();
+    model.result("pg2").run();
+
+    model.sol("sol1").study("std1");
+    model.sol("sol1").feature().remove("e1");
+    model.sol("sol1").feature().remove("v1");
+    model.sol("sol1").feature().remove("st1");
+    model.sol("sol1").create("st1", "StudyStep");
+    model.sol("sol1").feature("st1").set("study", "std1");
+    model.sol("sol1").feature("st1").set("studystep", "eig");
+    model.sol("sol1").create("v1", "Variables");
+    model.sol("sol1").feature("v1").set("control", "eig");
+    model.sol("sol1").create("e1", "Eigenvalue");
+    model.sol("sol1").feature("e1").set("eigref", "7");
+    model.sol("sol1").feature("e1").set("control", "eig");
+    model.sol("sol1").feature("e1").feature("aDef").set("complexfun", true);
+    model.sol("sol1").feature("e1").feature("aDef").set("cachepattern", false);
+    model.sol("sol1").feature("e1").create("d1", "Direct");
+    model.sol("sol1").feature("e1").feature("d1").set("linsolver", "pardiso");
+    model.sol("sol1").feature("e1").feature("d1").label("Suggested Direct Solver (emw)");
+    model.sol("sol1").feature("e1").create("i1", "Iterative");
+    model.sol("sol1").feature("e1").feature("i1").set("linsolver", "gmres");
+    model.sol("sol1").feature("e1").feature("i1").set("prefuntype", "right");
+    model.sol("sol1").feature("e1").feature("i1").set("itrestart", "300");
+    model.sol("sol1").feature("e1").feature("i1").label("Suggested Iterative Solver (emw)");
+    model.sol("sol1").feature("e1").feature("i1").create("mg1", "Multigrid");
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").set("iter", "1");
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("pr").create("sv1", "SORVector");
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("pr").feature("sv1")
+         .set("prefun", "sorvec");
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("pr").feature("sv1").set("iter", 2);
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("pr").feature("sv1").set("relax", 1);
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("pr").feature("sv1")
+         .set("sorvecdof", new String[]{"comp1_E"});
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("po").create("sv1", "SORVector");
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("po").feature("sv1")
+         .set("prefun", "soruvec");
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("po").feature("sv1").set("iter", 2);
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("po").feature("sv1").set("relax", 1);
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("po").feature("sv1")
+         .set("sorvecdof", new String[]{"comp1_E"});
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("cs").create("d1", "Direct");
+    model.sol("sol1").feature("e1").feature("i1").feature("mg1").feature("cs").feature("d1")
+         .set("linsolver", "pardiso");
+    model.sol("sol1").feature("e1").feature("d1").active(true);
+    model.sol("sol1").attach("std1");
+    model.sol("sol1").runAll();
+
+    model.result("pg1").run();
+    model.result("pg2").run();
+    model.result("pg2").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result().create("pg3", "PlotGroup2D");
+    model.result("pg3").run();
+    model.result().remove("pg3");
+    model.result("pg2").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result().create("pg3", "PlotGroup2D");
+    model.result("pg3").run();
+    model.result().remove("pg3");
+    model.result().create("pg3", "PlotGroup3D");
+    model.result("pg3").run();
+    model.result("pg3").set("looplevel", new int[]{2});
+    model.result().remove("pg3");
+    model.result("pg1").run();
+    model.result("pg1").set("looplevel", new int[]{2});
+    model.result("pg1").run();
+    model.result("pg1").create("slc1", "Slice");
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").set("looplevel", new int[]{3});
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").feature().remove("slc1");
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").feature("arwv1").active(false);
+    model.result("pg1").run();
+    model.result("pg1").feature("arwv2").active(false);
+    model.result("pg1").run();
+    model.result("pg1").feature("mslc1").active(false);
+    model.result("pg1").feature("mslc1").active(true);
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").set("looplevel", new int[]{2});
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").create("slc1", "Slice");
+    model.result("pg1").run();
+    model.result("pg1").feature("slc1").set("colorscalemode", "logarithmic");
+    model.result("pg1").feature("slc1").set("quickxnumber", 3);
+    model.result("pg1").run();
+    model.result("pg1").feature("slc1").set("quickplane", "zx");
+    model.result("pg1").run();
+    model.result("pg1").feature("slc1").set("quickynumber", 1);
+    model.result("pg1").run();
+    model.result("pg1").run();
+    model.result("pg1").feature("slc1").set("quickynumber", 1);
+    model.result("pg1").run();
+    model.result("pg1").feature("slc1").set("colorscalemode", "linear");
+    model.result("pg1").run();
+    model.result("pg1").set("looplevel", new int[]{3});
+    model.result("pg1").run();
+    model.result("pg1").set("looplevel", new int[]{1});
+    model.result("pg1").run();
+    model.result("pg1").set("looplevel", new int[]{4});
+    model.result("pg1").run();
+
+    model.component("comp1").geom("geom1").feature("wp1").set("unite", true);
+
+    model.component("comp1").view("view1").set("showDirections", false);
+    model.component("comp1").view("view1").set("showlabels", false);
+    model.component("comp1").view("view1").set("renderwireframe", false);
+    model.component("comp1").view("view1").set("transparency", true);
+    model.component("comp1").view("view1").set("ssao", false);
+    model.component("comp1").view("view1").set("shadowmapping", false);
+
+    model.component("comp1").geom("geom1").feature("wp2").geom().feature("mir1").setAttribute("construction", "off");
+    model.component("comp1").geom("geom1").feature("wp2").geom().feature("mir1")
+         .setAttribute("construction", "inherit");
+    model.component("comp1").geom("geom1").run();
+
+    model.component("comp1").material().create("mat3", "Common");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("eta", "Piecewise");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("Cp", "Piecewise");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("rho", "Analytic");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("k", "Piecewise");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("cs", "Analytic");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("an1", "Analytic");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("an2", "Analytic");
+    model.component("comp1").material("mat3").propertyGroup()
+         .create("RefractiveIndex", "RefractiveIndex", "Refractive index");
+    model.component("comp1").material("mat3").propertyGroup()
+         .create("NonlinearModel", "NonlinearModel", "Nonlinear model");
+    model.component("comp1").material("mat3").propertyGroup().create("idealGas", "idealGas", "Ideal gas");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func().create("Cp", "Piecewise");
+    model.component("comp1").material("mat3").label("Air 1");
+    model.component("comp1").material("mat3").set("family", "air");
+    model.component("comp1").material("mat3").propertyGroup("def").func("eta").set("arg", "T");
+    model.component("comp1").material("mat3").propertyGroup("def").func("eta")
+         .set("pieces", new String[][]{{"200.0", "1600.0", "-8.38278E-7+8.35717342E-8*T^1-7.69429583E-11*T^2+4.6437266E-14*T^3-1.06585607E-17*T^4"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("eta").set("argunit", "K");
+    model.component("comp1").material("mat3").propertyGroup("def").func("eta").set("fununit", "Pa*s");
+    model.component("comp1").material("mat3").propertyGroup("def").func("Cp").set("arg", "T");
+    model.component("comp1").material("mat3").propertyGroup("def").func("Cp")
+         .set("pieces", new String[][]{{"200.0", "1600.0", "1047.63657-0.372589265*T^1+9.45304214E-4*T^2-6.02409443E-7*T^3+1.2858961E-10*T^4"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("Cp").set("argunit", "K");
+    model.component("comp1").material("mat3").propertyGroup("def").func("Cp").set("fununit", "J/(kg*K)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("expr", "pA*0.02897/R_const[K*mol/J]/T");
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho").set("args", new String[]{"pA", "T"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho").set("fununit", "kg/m^3");
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("argunit", new String[]{"Pa", "K"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("plotaxis", new String[]{"off", "on"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("plotfixedvalue", new String[]{"101325", "273.15"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("plotargs", new String[][]{{"pA", "101325", "101325"}, {"T", "273.15", "293.15"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("k").set("arg", "T");
+    model.component("comp1").material("mat3").propertyGroup("def").func("k")
+         .set("pieces", new String[][]{{"200.0", "1600.0", "-0.00227583562+1.15480022E-4*T^1-7.90252856E-8*T^2+4.11702505E-11*T^3-7.43864331E-15*T^4"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("k").set("argunit", "K");
+    model.component("comp1").material("mat3").propertyGroup("def").func("k").set("fununit", "W/(m*K)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs")
+         .set("expr", "sqrt(1.4*R_const[K*mol/J]/0.02897*T)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs").set("args", new String[]{"T"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs").set("fununit", "m/s");
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs").set("argunit", new String[]{"K"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs")
+         .set("plotfixedvalue", new String[]{"273.15"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs")
+         .set("plotargs", new String[][]{{"T", "273.15", "373.15"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1").set("funcname", "alpha_p");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("expr", "-1/rho(pA,T)*d(rho(pA,T),T)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1").set("args", new String[]{"pA", "T"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1").set("fununit", "1/K");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("argunit", new String[]{"Pa", "K"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("plotaxis", new String[]{"off", "on"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("plotfixedvalue", new String[]{"101325", "273.15"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("plotargs", new String[][]{{"pA", "101325", "101325"}, {"T", "273.15", "373.15"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("funcname", "muB");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("expr", "0.6*eta(T)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("args", new String[]{"T"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("fununit", "Pa*s");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("argunit", new String[]{"K"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2")
+         .set("plotfixedvalue", new String[]{"200"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2")
+         .set("plotargs", new String[][]{{"T", "200", "1600"}});
+    model.component("comp1").material("mat3").propertyGroup("def").set("thermalexpansioncoefficient", "");
+    model.component("comp1").material("mat3").propertyGroup("def").set("molarmass", "");
+    model.component("comp1").material("mat3").propertyGroup("def").set("bulkviscosity", "");
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("thermalexpansioncoefficient", new String[]{"alpha_p(pA,T)", "0", "0", "0", "alpha_p(pA,T)", "0", "0", "0", "alpha_p(pA,T)"});
+    model.component("comp1").material("mat3").propertyGroup("def").set("molarmass", "0.02897[kg/mol]");
+    model.component("comp1").material("mat3").propertyGroup("def").set("bulkviscosity", "muB(T)");
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("relpermeability", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("relpermittivity", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat3").propertyGroup("def").set("dynamicviscosity", "eta(T)");
+    model.component("comp1").material("mat3").propertyGroup("def").set("ratioofspecificheat", "1.4");
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("electricconductivity", new String[]{"0[S/m]", "0", "0", "0", "0[S/m]", "0", "0", "0", "0[S/m]"});
+    model.component("comp1").material("mat3").propertyGroup("def").set("heatcapacity", "Cp(T)");
+    model.component("comp1").material("mat3").propertyGroup("def").set("density", "rho(pA,T)");
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("thermalconductivity", new String[]{"k(T)", "0", "0", "0", "k(T)", "0", "0", "0", "k(T)"});
+    model.component("comp1").material("mat3").propertyGroup("def").set("soundspeed", "cs(T)");
+    model.component("comp1").material("mat3").propertyGroup("def").addInput("temperature");
+    model.component("comp1").material("mat3").propertyGroup("def").addInput("pressure");
+    model.component("comp1").material("mat3").propertyGroup("RefractiveIndex")
+         .set("n", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat3").propertyGroup("NonlinearModel").set("BA", "def.gamma-1");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp").label("Piecewise 2");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp").set("arg", "T");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp")
+         .set("pieces", new String[][]{{"200.0", "1600.0", "1047.63657-0.372589265*T^1+9.45304214E-4*T^2-6.02409443E-7*T^3+1.2858961E-10*T^4"}});
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp").set("argunit", "K");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp").set("fununit", "J/(kg*K)");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").set("Rs", "R_const/Mn");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").set("heatcapacity", "Cp(T)");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").set("ratioofspecificheat", "1.4");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").set("molarmass", "0.02897[kg/mol]");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").addInput("temperature");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").addInput("pressure");
+    model.component("comp1").material("mat3").materialType("nonSolid");
+    model.component("comp1").material().remove("mat3");
+
+    model.component("comp1").geom("geom1").runPre("uni1");
+
+    model.component("comp1").material("mat1").selection().set();
+    model.component("comp1").material("mat1").selection().all();
+    model.component("comp1").material("mat1").selection().set(1, 3, 4);
+    model.component("comp1").material("mat2").selection().set(1, 2);
+    model.component("comp1").material().create("mat3", "Common");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("eta", "Piecewise");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("Cp", "Piecewise");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("rho", "Analytic");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("k", "Piecewise");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("cs", "Analytic");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("an1", "Analytic");
+    model.component("comp1").material("mat3").propertyGroup("def").func().create("an2", "Analytic");
+    model.component("comp1").material("mat3").propertyGroup()
+         .create("RefractiveIndex", "RefractiveIndex", "Refractive index");
+    model.component("comp1").material("mat3").propertyGroup()
+         .create("NonlinearModel", "NonlinearModel", "Nonlinear model");
+    model.component("comp1").material("mat3").propertyGroup().create("idealGas", "idealGas", "Ideal gas");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func().create("Cp", "Piecewise");
+    model.component("comp1").material("mat3").label("Air 1");
+    model.component("comp1").material("mat3").set("family", "air");
+    model.component("comp1").material("mat3").propertyGroup("def").func("eta").set("arg", "T");
+    model.component("comp1").material("mat3").propertyGroup("def").func("eta")
+         .set("pieces", new String[][]{{"200.0", "1600.0", "-8.38278E-7+8.35717342E-8*T^1-7.69429583E-11*T^2+4.6437266E-14*T^3-1.06585607E-17*T^4"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("eta").set("argunit", "K");
+    model.component("comp1").material("mat3").propertyGroup("def").func("eta").set("fununit", "Pa*s");
+    model.component("comp1").material("mat3").propertyGroup("def").func("Cp").set("arg", "T");
+    model.component("comp1").material("mat3").propertyGroup("def").func("Cp")
+         .set("pieces", new String[][]{{"200.0", "1600.0", "1047.63657-0.372589265*T^1+9.45304214E-4*T^2-6.02409443E-7*T^3+1.2858961E-10*T^4"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("Cp").set("argunit", "K");
+    model.component("comp1").material("mat3").propertyGroup("def").func("Cp").set("fununit", "J/(kg*K)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("expr", "pA*0.02897/R_const[K*mol/J]/T");
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho").set("args", new String[]{"pA", "T"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho").set("fununit", "kg/m^3");
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("argunit", new String[]{"Pa", "K"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("plotaxis", new String[]{"off", "on"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("plotfixedvalue", new String[]{"101325", "273.15"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("rho")
+         .set("plotargs", new String[][]{{"pA", "101325", "101325"}, {"T", "273.15", "293.15"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("k").set("arg", "T");
+    model.component("comp1").material("mat3").propertyGroup("def").func("k")
+         .set("pieces", new String[][]{{"200.0", "1600.0", "-0.00227583562+1.15480022E-4*T^1-7.90252856E-8*T^2+4.11702505E-11*T^3-7.43864331E-15*T^4"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("k").set("argunit", "K");
+    model.component("comp1").material("mat3").propertyGroup("def").func("k").set("fununit", "W/(m*K)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs")
+         .set("expr", "sqrt(1.4*R_const[K*mol/J]/0.02897*T)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs").set("args", new String[]{"T"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs").set("fununit", "m/s");
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs").set("argunit", new String[]{"K"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs")
+         .set("plotfixedvalue", new String[]{"273.15"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("cs")
+         .set("plotargs", new String[][]{{"T", "273.15", "373.15"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1").set("funcname", "alpha_p");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("expr", "-1/rho(pA,T)*d(rho(pA,T),T)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1").set("args", new String[]{"pA", "T"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1").set("fununit", "1/K");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("argunit", new String[]{"Pa", "K"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("plotaxis", new String[]{"off", "on"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("plotfixedvalue", new String[]{"101325", "273.15"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an1")
+         .set("plotargs", new String[][]{{"pA", "101325", "101325"}, {"T", "273.15", "373.15"}});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("funcname", "muB");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("expr", "0.6*eta(T)");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("args", new String[]{"T"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("fununit", "Pa*s");
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2").set("argunit", new String[]{"K"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2")
+         .set("plotfixedvalue", new String[]{"200"});
+    model.component("comp1").material("mat3").propertyGroup("def").func("an2")
+         .set("plotargs", new String[][]{{"T", "200", "1600"}});
+    model.component("comp1").material("mat3").propertyGroup("def").set("thermalexpansioncoefficient", "");
+    model.component("comp1").material("mat3").propertyGroup("def").set("molarmass", "");
+    model.component("comp1").material("mat3").propertyGroup("def").set("bulkviscosity", "");
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("thermalexpansioncoefficient", new String[]{"alpha_p(pA,T)", "0", "0", "0", "alpha_p(pA,T)", "0", "0", "0", "alpha_p(pA,T)"});
+    model.component("comp1").material("mat3").propertyGroup("def").set("molarmass", "0.02897[kg/mol]");
+    model.component("comp1").material("mat3").propertyGroup("def").set("bulkviscosity", "muB(T)");
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("relpermeability", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("relpermittivity", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat3").propertyGroup("def").set("dynamicviscosity", "eta(T)");
+    model.component("comp1").material("mat3").propertyGroup("def").set("ratioofspecificheat", "1.4");
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("electricconductivity", new String[]{"0[S/m]", "0", "0", "0", "0[S/m]", "0", "0", "0", "0[S/m]"});
+    model.component("comp1").material("mat3").propertyGroup("def").set("heatcapacity", "Cp(T)");
+    model.component("comp1").material("mat3").propertyGroup("def").set("density", "rho(pA,T)");
+    model.component("comp1").material("mat3").propertyGroup("def")
+         .set("thermalconductivity", new String[]{"k(T)", "0", "0", "0", "k(T)", "0", "0", "0", "k(T)"});
+    model.component("comp1").material("mat3").propertyGroup("def").set("soundspeed", "cs(T)");
+    model.component("comp1").material("mat3").propertyGroup("def").addInput("temperature");
+    model.component("comp1").material("mat3").propertyGroup("def").addInput("pressure");
+    model.component("comp1").material("mat3").propertyGroup("RefractiveIndex")
+         .set("n", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat3").propertyGroup("NonlinearModel").set("BA", "def.gamma-1");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp").label("Piecewise 2");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp").set("arg", "T");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp")
+         .set("pieces", new String[][]{{"200.0", "1600.0", "1047.63657-0.372589265*T^1+9.45304214E-4*T^2-6.02409443E-7*T^3+1.2858961E-10*T^4"}});
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp").set("argunit", "K");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").func("Cp").set("fununit", "J/(kg*K)");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").set("Rs", "R_const/Mn");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").set("heatcapacity", "Cp(T)");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").set("ratioofspecificheat", "1.4");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").set("molarmass", "0.02897[kg/mol]");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").addInput("temperature");
+    model.component("comp1").material("mat3").propertyGroup("idealGas").addInput("pressure");
+    model.component("comp1").material("mat3").materialType("nonSolid");
+    model.component("comp1").material("mat3").selection().set(1);
 
     return model;
   }
