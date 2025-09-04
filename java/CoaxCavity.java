@@ -5,7 +5,7 @@
 import com.comsol.model.*;
 import com.comsol.model.util.*;
 
-/** Model exported on Sep 4 2025, 05:45 by COMSOL 6.3.0.335. */
+/** Model exported on Sep 4 2025, 09:12 by COMSOL 6.3.0.335. */
 public class CoaxCavity {
 
   public static Model run() {
@@ -24,10 +24,10 @@ public class CoaxCavity {
     model.param().set("antenna_radius", "1.5[mm]");
     model.param().set("antenna_outer_height", "8[mm]");
     model.param().set("antenna_outer_radius", "3[mm]");
-    model.param().set("chip_inductance", "1.4[nH]");
-    model.param().set("chip_gap", "220[um]");
-    model.param().set("chip_width", "250[um]");
-    model.param().set("chip_height", "2000[um]");
+    model.param().set("chip_inductance", "9[nH]");
+    model.param().set("chip_gap", "200[um]");
+    model.param().set("chip_width", "500[um]");
+    model.param().set("chip_height", "600[um]");
     model.param().set("chip_theta", "0[deg]");
     model.param().set("chip_fillet", "10[um]");
     model.param().set("chip_pos_z_ratio", "0.6");
@@ -47,12 +47,6 @@ public class CoaxCavity {
     model.component("comp1").geom().create("geom1", 3);
     model.component("comp1").geom("geom1").lengthUnit("mm");
     model.component("comp1").geom("geom1").run();
-    model.component("comp1").geom("geom1").create("boundary", "Block");
-    model.component("comp1").geom("geom1").feature("boundary")
-         .set("pos", new String[]{"-box_length/2", "-box_length/2", "outer_height - box_height"});
-    model.component("comp1").geom("geom1").feature("boundary")
-         .set("size", new String[]{"box_length", "box_length", "box_height"});
-    model.component("comp1").geom("geom1").run("boundary");
     model.component("comp1").geom("geom1").create("block1", "Block");
     model.component("comp1").geom("geom1").feature("block1")
          .set("pos", new String[]{"-box_length/2", "-box_length/2", "outer_height - box_height"});
@@ -89,6 +83,17 @@ public class CoaxCavity {
     model.component("comp1").geom("geom1").feature("uni1").selection("input").set("diff1", "ext2");
     model.component("comp1").geom("geom1").feature("uni1").set("intbnd", false);
     model.component("comp1").geom("geom1").run("uni1");
+    model.component("comp1").geom("geom1").create("boundary", "Block");
+    model.component("comp1").geom("geom1").feature("boundary")
+         .set("pos", new String[]{"-box_length/2", "-box_length/2", "outer_height - box_height"});
+    model.component("comp1").geom("geom1").feature("boundary")
+         .set("size", new String[]{"box_length", "box_length", "box_height"});
+    model.component("comp1").geom("geom1").run("boundary");
+    model.component("comp1").geom("geom1").create("air", "Difference");
+    model.component("comp1").geom("geom1").feature("air").selection("input").set("boundary");
+    model.component("comp1").geom("geom1").feature("air").selection("input2").set("uni1");
+    model.component("comp1").geom("geom1").feature("air").set("keepsubtract", true);
+    model.component("comp1").geom("geom1").run("air");
     model.component("comp1").geom("geom1").create("wp6", "WorkPlane");
     model.component("comp1").geom("geom1").feature("wp6").set("unite", true);
     model.component("comp1").geom("geom1").feature("wp6").set("quickz", "chip_pos_z - wafer_height");
@@ -153,86 +158,18 @@ public class CoaxCavity {
 
     model.component("comp1").view("view1").set("transparency", true);
 
-    model.component("comp1").mesh().create("mesh1");
-
-    model.component("comp1").physics().create("emw", "ElectromagneticWaves", "geom1");
-
-    model.study().create("std1");
-
-    model.sol().create("sol1");
-    model.sol("sol1").study("std1");
-
-    model.label("CoaxCavity.mph");
-
-    model.component("comp1").material().create("mat1", "Common");
-    model.component("comp1").material("mat1").propertyGroup()
-         .create("Enu", "Enu", "Young's modulus and Poisson's ratio");
-    model.component("comp1").material("mat1").propertyGroup()
-         .create("RefractiveIndex", "RefractiveIndex", "Refractive index");
-    model.component("comp1").material("mat1").label("Silicon");
-    model.component("comp1").material("mat1").set("family", "custom");
-    model.component("comp1").material("mat1").set("customspecular", new double[]{0.7843137254901961, 1, 1});
-    model.component("comp1").material("mat1").set("diffuse", "custom");
-    model.component("comp1").material("mat1")
-         .set("customdiffuse", new double[]{0.6666666666666666, 0.6666666666666666, 0.7058823529411765});
-    model.component("comp1").material("mat1").set("ambient", "custom");
-    model.component("comp1").material("mat1")
-         .set("customambient", new double[]{0.6666666666666666, 0.6666666666666666, 0.7058823529411765});
-    model.component("comp1").material("mat1").set("noise", true);
-    model.component("comp1").material("mat1").set("fresnel", 0.7);
-    model.component("comp1").material("mat1").set("roughness", 0.5);
-    model.component("comp1").material("mat1").set("diffusewrap", 0);
-    model.component("comp1").material("mat1").set("reflectance", 0);
-    model.component("comp1").material("mat1").propertyGroup("def")
-         .set("relpermeability", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
-    model.component("comp1").material("mat1").propertyGroup("def")
-         .set("electricconductivity", new String[]{"1e-12[S/m]", "0", "0", "0", "1e-12[S/m]", "0", "0", "0", "1e-12[S/m]"});
-    model.component("comp1").material("mat1").propertyGroup("def")
-         .set("thermalexpansioncoefficient", new String[]{"2.6e-6[1/K]", "0", "0", "0", "2.6e-6[1/K]", "0", "0", "0", "2.6e-6[1/K]"});
-    model.component("comp1").material("mat1").propertyGroup("def").set("heatcapacity", "700[J/(kg*K)]");
-    model.component("comp1").material("mat1").propertyGroup("def")
-         .set("relpermittivity", new String[]{"11.7", "0", "0", "0", "11.7", "0", "0", "0", "11.7"});
-    model.component("comp1").material("mat1").propertyGroup("def").set("density", "2329[kg/m^3]");
-    model.component("comp1").material("mat1").propertyGroup("def")
-         .set("thermalconductivity", new String[]{"130[W/(m*K)]", "0", "0", "0", "130[W/(m*K)]", "0", "0", "0", "130[W/(m*K)]"});
-    model.component("comp1").material("mat1").propertyGroup("Enu").set("E", "170[GPa]");
-    model.component("comp1").material("mat1").propertyGroup("Enu").set("nu", "0.28");
-    model.component("comp1").material("mat1").propertyGroup("RefractiveIndex")
-         .set("n", new String[]{"3.48", "0", "0", "0", "3.48", "0", "0", "0", "3.48"});
-    model.component("comp1").material("mat1").selection().set(1);
-    model.component("comp1").material("mat1").selection().all();
-
-    model.component("comp1").geom("geom1").feature("wp7").set("selresult", true);
+    model.component("comp1").geom("geom1").feature("air").set("selresult", true);
+    model.component("comp1").geom("geom1").feature("uni1").set("selresult", true);
     model.component("comp1").geom("geom1").feature("ext6").set("selresult", true);
+    model.component("comp1").geom("geom1").feature("wp7").set("selresult", true);
+    model.component("comp1").geom("geom1").feature("air").set("selresultshow", "all");
+    model.component("comp1").geom("geom1").feature("uni1").set("selresultshow", "all");
+    model.component("comp1").geom("geom1").feature("ext6").set("selresultshow", "all");
+    model.component("comp1").geom("geom1").feature("wp7").set("selresultshow", "all");
 
-    model.component("comp1").material("mat1").selection().named("geom1_ext6_dom");
-    model.component("comp1").material().create("mat2", "Common");
-    model.component("comp1").material("mat2").propertyGroup()
-         .create("Enu", "Enu", "Young's modulus and Poisson's ratio");
-    model.component("comp1").material("mat2").propertyGroup().create("linzRes", "linzRes", "Linearized resistivity");
-    model.component("comp1").material("mat2").label("Copper");
-    model.component("comp1").material("mat2").set("family", "copper");
-    model.component("comp1").material("mat2").propertyGroup("def")
-         .set("relpermeability", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
-    model.component("comp1").material("mat2").propertyGroup("def")
-         .set("electricconductivity", new String[]{"5.998e7[S/m]", "0", "0", "0", "5.998e7[S/m]", "0", "0", "0", "5.998e7[S/m]"});
-    model.component("comp1").material("mat2").propertyGroup("def")
-         .set("thermalexpansioncoefficient", new String[]{"17e-6[1/K]", "0", "0", "0", "17e-6[1/K]", "0", "0", "0", "17e-6[1/K]"});
-    model.component("comp1").material("mat2").propertyGroup("def").set("heatcapacity", "385[J/(kg*K)]");
-    model.component("comp1").material("mat2").propertyGroup("def")
-         .set("relpermittivity", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
-    model.component("comp1").material("mat2").propertyGroup("def").set("density", "8960[kg/m^3]");
-    model.component("comp1").material("mat2").propertyGroup("def")
-         .set("thermalconductivity", new String[]{"400[W/(m*K)]", "0", "0", "0", "400[W/(m*K)]", "0", "0", "0", "400[W/(m*K)]"});
-    model.component("comp1").material("mat2").propertyGroup("Enu").set("E", "110[GPa]");
-    model.component("comp1").material("mat2").propertyGroup("Enu").set("nu", "0.35");
-    model.component("comp1").material("mat2").propertyGroup("linzRes").set("rho0", "1.72e-8[ohm*m]");
-    model.component("comp1").material("mat2").propertyGroup("linzRes").set("alpha", "0.0039[1/K]");
-    model.component("comp1").material("mat2").propertyGroup("linzRes").set("Tref", "298[K]");
-    model.component("comp1").material("mat2").propertyGroup("linzRes").addInput("temperature");
-    model.component("comp1").material("mat2").selection().all();
-    model.component("comp1").material("mat2").selection().set(1);
     model.component("comp1").material().create("mat3", "Common");
+    model.component("comp1").material("mat3").label("Air");
+    model.component("comp1").material("mat3").set("family", "air");
     model.component("comp1").material("mat3").propertyGroup("def").func().create("eta", "Piecewise");
     model.component("comp1").material("mat3").propertyGroup("def").func().create("Cp", "Piecewise");
     model.component("comp1").material("mat3").propertyGroup("def").func().create("rho", "Analytic");
@@ -246,8 +183,6 @@ public class CoaxCavity {
          .create("NonlinearModel", "NonlinearModel", "Nonlinear model");
     model.component("comp1").material("mat3").propertyGroup().create("idealGas", "idealGas", "Ideal gas");
     model.component("comp1").material("mat3").propertyGroup("idealGas").func().create("Cp", "Piecewise");
-    model.component("comp1").material("mat3").label("Air");
-    model.component("comp1").material("mat3").set("family", "air");
     model.component("comp1").material("mat3").propertyGroup("def").func("eta").set("arg", "T");
     model.component("comp1").material("mat3").propertyGroup("def").func("eta")
          .set("pieces", new String[][]{{"200.0", "1600.0", "-8.38278E-7+8.35717342E-8*T^1-7.69429583E-11*T^2+4.6437266E-14*T^3-1.06585607E-17*T^4"}});
@@ -344,57 +279,147 @@ public class CoaxCavity {
     model.component("comp1").material("mat3").propertyGroup("idealGas").addInput("temperature");
     model.component("comp1").material("mat3").propertyGroup("idealGas").addInput("pressure");
     model.component("comp1").material("mat3").materialType("nonSolid");
-    model.component("comp1").material("mat3").selection().all();
-    model.component("comp1").material("mat3").selection().set(2);
+    model.component("comp1").material("mat3").selection().named("geom1_air_dom");
+    model.component("comp1").material().create("mat2", "Common");
+    model.component("comp1").material("mat2").propertyGroup()
+         .create("Enu", "Enu", "Young's modulus and Poisson's ratio");
+    model.component("comp1").material("mat2").propertyGroup().create("linzRes", "linzRes", "Linearized resistivity");
+    model.component("comp1").material("mat2").label("Copper");
+    model.component("comp1").material("mat2").set("family", "copper");
+    model.component("comp1").material("mat2").propertyGroup("def")
+         .set("relpermeability", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat2").propertyGroup("def")
+         .set("electricconductivity", new String[]{"5.998e7[S/m]", "0", "0", "0", "5.998e7[S/m]", "0", "0", "0", "5.998e7[S/m]"});
+    model.component("comp1").material("mat2").propertyGroup("def")
+         .set("thermalexpansioncoefficient", new String[]{"17e-6[1/K]", "0", "0", "0", "17e-6[1/K]", "0", "0", "0", "17e-6[1/K]"});
+    model.component("comp1").material("mat2").propertyGroup("def").set("heatcapacity", "385[J/(kg*K)]");
+    model.component("comp1").material("mat2").propertyGroup("def")
+         .set("relpermittivity", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat2").propertyGroup("def").set("density", "8960[kg/m^3]");
+    model.component("comp1").material("mat2").propertyGroup("def")
+         .set("thermalconductivity", new String[]{"400[W/(m*K)]", "0", "0", "0", "400[W/(m*K)]", "0", "0", "0", "400[W/(m*K)]"});
+    model.component("comp1").material("mat2").propertyGroup("Enu").set("E", "110[GPa]");
+    model.component("comp1").material("mat2").propertyGroup("Enu").set("nu", "0.35");
+    model.component("comp1").material("mat2").propertyGroup("linzRes").set("rho0", "1.72e-8[ohm*m]");
+    model.component("comp1").material("mat2").propertyGroup("linzRes").set("alpha", "0.0039[1/K]");
+    model.component("comp1").material("mat2").propertyGroup("linzRes").set("Tref", "298[K]");
+    model.component("comp1").material("mat2").propertyGroup("linzRes").addInput("temperature");
+    model.component("comp1").material("mat2").selection().named("geom1_uni1_dom");
+    model.component("comp1").material().create("mat1", "Common");
+    model.component("comp1").material("mat1").label("Silicon");
+    model.component("comp1").material("mat1").set("family", "silicon");
+    model.component("comp1").material("mat1").propertyGroup().create("Enu", "Young's modulus and Poisson's ratio");
+    model.component("comp1").material("mat1").propertyGroup().create("RefractiveIndex", "Refractive index");
+    model.component("comp1").material("mat1").set("customspecular", new double[]{0.7843137254901961, 1, 1});
+    model.component("comp1").material("mat1")
+         .set("customdiffuse", new double[]{0.6666666666666666, 0.6666666666666666, 0.7058823529411765});
+    model.component("comp1").material("mat1")
+         .set("customambient", new double[]{0.6666666666666666, 0.6666666666666666, 0.7058823529411765});
+    model.component("comp1").material("mat1").set("noise", true);
+    model.component("comp1").material("mat1").set("fresnel", 0.7);
+    model.component("comp1").material("mat1").set("metallic", 0);
+    model.component("comp1").material("mat1").set("pearl", 0);
+    model.component("comp1").material("mat1").set("diffusewrap", 0);
+    model.component("comp1").material("mat1").set("clearcoat", 0);
+    model.component("comp1").material("mat1").set("reflectance", 0);
+    model.component("comp1").material("mat1").propertyGroup("def").label("Basic");
+    model.component("comp1").material("mat1").propertyGroup("def")
+         .set("relpermeability", new String[]{"1", "0", "0", "0", "1", "0", "0", "0", "1"});
+    model.component("comp1").material("mat1").propertyGroup("def")
+         .set("electricconductivity", new String[]{"1e-12[S/m]", "0", "0", "0", "1e-12[S/m]", "0", "0", "0", "1e-12[S/m]"});
+    model.component("comp1").material("mat1").propertyGroup("def")
+         .set("thermalexpansioncoefficient", new String[]{"2.6e-6[1/K]", "0", "0", "0", "2.6e-6[1/K]", "0", "0", "0", "2.6e-6[1/K]"});
+    model.component("comp1").material("mat1").propertyGroup("def").set("heatcapacity", "700[J/(kg*K)]");
+    model.component("comp1").material("mat1").propertyGroup("def")
+         .set("relpermittivity", new String[]{"11.7", "0", "0", "0", "11.7", "0", "0", "0", "11.7"});
+    model.component("comp1").material("mat1").propertyGroup("def").set("density", "2329[kg/m^3]");
+    model.component("comp1").material("mat1").propertyGroup("def")
+         .set("thermalconductivity", new String[]{"130[W/(m*K)]", "0", "0", "0", "130[W/(m*K)]", "0", "0", "0", "130[W/(m*K)]"});
+    model.component("comp1").material("mat1").propertyGroup("Enu").label("Young's modulus and Poisson's ratio");
+    model.component("comp1").material("mat1").propertyGroup("Enu").set("E", "170[GPa]");
+    model.component("comp1").material("mat1").propertyGroup("Enu").set("nu", "0.28");
+    model.component("comp1").material("mat1").propertyGroup("RefractiveIndex").label("Refractive index");
+    model.component("comp1").material("mat1").propertyGroup("RefractiveIndex")
+         .set("n", new String[]{"3.48", "0", "0", "0", "3.48", "0", "0", "0", "3.48"});
+    model.component("comp1").material("mat1").set("family", "custom");
+    model.component("comp1").material("mat1").set("lighting", "cooktorrance");
+    model.component("comp1").material("mat1").set("fresnel", 0.7);
+    model.component("comp1").material("mat1").set("roughness", 0.5);
+    model.component("comp1").material("mat1").set("anisotropy", 0);
+    model.component("comp1").material("mat1").set("flipanisotropy", false);
+    model.component("comp1").material("mat1").set("metallic", 0);
+    model.component("comp1").material("mat1").set("pearl", 0);
+    model.component("comp1").material("mat1").set("diffusewrap", 0);
+    model.component("comp1").material("mat1").set("clearcoat", 0);
+    model.component("comp1").material("mat1").set("reflectance", 0);
+    model.component("comp1").material("mat1").set("ambient", "custom");
+    model.component("comp1").material("mat1")
+         .set("customambient", new double[]{0.6666666666666666, 0.6666666666666666, 0.7058823529411765});
+    model.component("comp1").material("mat1").set("diffuse", "custom");
+    model.component("comp1").material("mat1")
+         .set("customdiffuse", new double[]{0.6666666666666666, 0.6666666666666666, 0.7058823529411765});
+    model.component("comp1").material("mat1").set("specular", "custom");
+    model.component("comp1").material("mat1").set("customspecular", new double[]{0.7843137254901961, 1, 1});
+    model.component("comp1").material("mat1").set("noisecolor", "custom");
+    model.component("comp1").material("mat1").set("customnoisecolor", new double[]{0, 0, 0});
+    model.component("comp1").material("mat1").set("noisescale", 0);
+    model.component("comp1").material("mat1").set("noise", "off");
+    model.component("comp1").material("mat1").set("noisefreq", 1);
+    model.component("comp1").material("mat1").set("normalnoisebrush", "0");
+    model.component("comp1").material("mat1").set("normalnoisetype", "0");
+    model.component("comp1").material("mat1").set("alpha", 1);
+    model.component("comp1").material("mat1").set("anisotropyaxis", new double[]{0, 0, 1});
+    model.component("comp1").material("mat1").selection().named("geom1_ext6_dom");
 
-    model.component("comp1").physics("emw").create("lelement1", "LumpedElement", 2);
-    model.component("comp1").physics("emw").feature("lelement1").selection().named("geom1_wp7_bnd");
-    model.component("comp1").physics("emw").feature("lelement1").selection().set(20);
+    model.component("comp1").mesh().create("mesh1");
+
+    model.component("comp1").physics().create("emw", "ElectromagneticWaves", "geom1");
     model.component("comp1").physics("emw").create("pec2", "PerfectElectricConductor", 2);
-    model.component("comp1").physics("emw").feature("pec2").selection().all();
-    model.component("comp1").physics("emw").feature().move("lelement1", 5);
-
-    model.component("comp1").geom("geom1").feature("uni1").set("selresult", true);
-    model.component("comp1").geom("geom1").feature("uni1").set("selresultshow", "all");
-
     model.component("comp1").physics("emw").feature("pec2").selection().named("geom1_uni1_bnd");
+    model.component("comp1").physics("emw").create("pec3", "PerfectElectricConductor", 2);
+    model.component("comp1").physics("emw").feature("pec3").selection().named("geom1_wp7_bnd");
+    model.component("comp1").physics("emw").create("lelement1", "LumpedElement", 2);
+    model.component("comp1").physics("emw").feature("lelement1").selection().set(20);
+    model.component("comp1").physics("emw").feature("lelement1").set("LumpedElementType", "Inductor");
+    model.component("comp1").physics("emw").feature("lelement1").set("Lelement", "chip_inductance");
 
     model.component("comp1").mesh("mesh1").run();
 
-    model.study().create("std2");
-    model.study("std2").create("eig", "Eigenfrequency");
-    model.study("std2").feature("eig").set("linpsolnum", "auto");
-    model.study("std2").feature("eig").set("solnum", "auto");
-    model.study("std2").feature("eig").set("notsolnum", "auto");
-    model.study("std2").feature("eig").set("outputmap", new String[]{});
-    model.study("std2").feature("eig").set("ngenAUX", "1");
-    model.study("std2").feature("eig").set("goalngenAUX", "1");
-    model.study("std2").feature("eig").set("ngenAUX", "1");
-    model.study("std2").feature("eig").set("goalngenAUX", "1");
-    model.study("std2").feature("eig").setSolveFor("/physics/emw", true);
-    model.study().remove("std1");
-    model.study("std2").feature("eig").set("shift", "5[GHz]");
+    model.study().create("std1");
+    model.study("std1").create("eig", "Eigenfrequency");
+    model.study("std1").feature("eig").set("linpsolnum", "auto");
+    model.study("std1").feature("eig").set("solnum", "auto");
+    model.study("std1").feature("eig").set("notsolnum", "auto");
+    model.study("std1").feature("eig").set("ngenAUX", "1");
+    model.study("std1").feature("eig").set("goalngenAUX", "1");
+    model.study("std1").feature("eig").set("ngenAUX", "1");
+    model.study("std1").feature("eig").set("goalngenAUX", "1");
+    model.study("std1").feature("eig").setSolveFor("/physics/emw", true);
+    model.study("std1").feature("eig").set("shift", "5[GHz]");
 
-    model.component("comp1").physics("emw").feature("lelement1").set("LumpedElementType", "Inductor");
-    model.component("comp1").physics("emw").feature("pec2").selection().named("geom1_wp7_bnd");
-    model.component("comp1").physics("emw").create("pec3", "PerfectElectricConductor", 2);
-    model.component("comp1").physics("emw").feature("pec3").selection().named("geom1_wp7_bnd");
-    model.component("comp1").physics("emw").feature().move("pec3", 5);
+    model.sol().create("sol1");
+    model.sol("sol1").study("std1");
 
-    model.study("std2").createAutoSequences("all");
+    model.study("std1").createAutoSequences("all");
 
     model.sol("sol1").runAll();
 
     model.result().create("pg1", "PlotGroup3D");
     model.result("pg1").label("Electric Field (emw)");
+    model.result("pg1").set("data", "dset1");
     model.result("pg1").set("frametype", "spatial");
     model.result("pg1").set("showlegendsmaxmin", true);
+    model.result("pg1").selection().named("geom1_air_dom");
     model.result("pg1").feature().create("mslc1", "Multislice");
     model.result("pg1").feature("mslc1").label("Multislice");
     model.result("pg1").feature("mslc1").set("showsolutionparams", "on");
     model.result("pg1").feature("mslc1").set("smooth", "internal");
     model.result("pg1").feature("mslc1").set("showsolutionparams", "on");
     model.result("pg1").feature("mslc1").set("data", "parent");
+    model.result("pg1").feature("mslc1").set("znumber", "0");
+    model.result("pg1").feature("mslc1").set("ynumber", "0");
+    model.result("pg1").feature("mslc1").set("colortable", "RainbowClassic");
+    model.result("pg1").feature("mslc1").set("colorscalemode", "logarithmic");
     model.result("pg1").feature("mslc1").feature().create("filt1", "Filter");
     model.result("pg1").feature("mslc1").feature("filt1").set("expr", "!isScalingSystemDomain");
     model.result().numerical().create("gev1", "EvalGlobal");
@@ -406,7 +431,66 @@ public class CoaxCavity {
     model.result().numerical("gev1").set("table", "tbl1");
     model.result().numerical("gev1").run();
     model.result().numerical("gev1").setResult();
+
+    return model;
+  }
+
+  public static Model run2(Model model) {
     model.result("pg1").run();
+
+    model.label("CoaxCavity.mph");
+
+    model.study().create("std2");
+    model.study("std2").create("eig", "Eigenfrequency");
+    model.study("std2").feature("eig").set("plotgroup", "Default");
+    model.study("std2").feature("eig").set("linpsolnum", "auto");
+    model.study("std2").feature("eig").set("solnum", "auto");
+    model.study("std2").feature("eig").set("notsolnum", "auto");
+    model.study("std2").feature("eig").set("outputmap", new String[]{});
+    model.study("std2").feature("eig").set("ngenAUX", "1");
+    model.study("std2").feature("eig").set("goalngenAUX", "1");
+    model.study("std2").feature("eig").set("ngenAUX", "1");
+    model.study("std2").feature("eig").set("goalngenAUX", "1");
+    model.study("std2").feature("eig").setSolveFor("/physics/emw", true);
+    model.study("std2").feature("eig").set("shift", "5[GHz]");
+    model.study("std2").feature("eig").set("neigsactive", true);
+    model.study("std2").feature("eig").set("neigs", 4);
+    model.study("std2").feature("eig").set("eigwhich", "si");
+    model.study("std2").createAutoSequences("all");
+    model.study("std2").feature("eig").set("neigs", 3);
+    model.study("std2").feature("eig").set("eigwhich", "lm");
+    model.study("std2").createAutoSequences("all");
+
+    model.sol("sol3").runAll();
+
+    model.result().create("pg2", "PlotGroup3D");
+    model.result("pg2").label("Electric Field (emw) 1");
+    model.result("pg2").set("data", "dset3");
+    model.result("pg2").setIndex("looplevel", 1, 0);
+    model.result("pg2").set("frametype", "spatial");
+    model.result("pg2").set("showlegendsmaxmin", true);
+    model.result("pg2").feature().create("mslc1", "Multislice");
+    model.result("pg2").feature("mslc1").label("Multislice");
+    model.result("pg2").feature("mslc1").set("showsolutionparams", "on");
+    model.result("pg2").feature("mslc1").set("smooth", "internal");
+    model.result("pg2").feature("mslc1").set("showsolutionparams", "on");
+    model.result("pg2").feature("mslc1").set("data", "parent");
+    model.result("pg2").feature("mslc1").feature().create("filt1", "Filter");
+    model.result("pg2").feature("mslc1").feature("filt1").set("expr", "!isScalingSystemDomain");
+    model.result().numerical().create("gev2", "EvalGlobal");
+    model.result().numerical("gev2").label("Eigenfrequencies (emw) 1");
+    model.result().numerical("gev2").set("data", "dset3");
+    model.result().numerical("gev2").set("expr", new String[]{"emw.freq", "emw.Qfactor"});
+    model.result().numerical("gev2").set("unit", new String[]{"GHz", "1"});
+    model.result().table().create("tbl2", "Table");
+    model.result().numerical("gev2").set("table", "tbl2");
+    model.result().numerical("gev2").run();
+    model.result().numerical("gev2").setResult();
+    model.result("pg2").run();
+    model.result("pg2").set("looplevel", new int[]{4});
+    model.result("pg2").run();
+    model.result("pg1").run();
+    model.result("pg1").set("data", "dset3");
     model.result("pg1").set("looplevel", new int[]{4});
     model.result("pg1").run();
 
@@ -414,7 +498,8 @@ public class CoaxCavity {
   }
 
   public static void main(String[] args) {
-    run();
+    Model model = run();
+    run2(model);
   }
 
 }

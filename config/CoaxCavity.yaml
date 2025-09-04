@@ -7,15 +7,21 @@ parameter:
   antenna_radius       : '1.5[mm]'
   antenna_outer_height : '8[mm]'
   antenna_outer_radius : '3[mm]'
-  chip_inductance      : '1.4[nH]'
-  chip_gap             : '220[um]' # 20[um]
-  chip_width           : '250[um]' # 250[um]
-  chip_height          : '2000[um]' # 400[um] (For chip_gap : 20[um], galvanic with 3240 ( ~4500 with 45 degree ? ) )
+
+  chip_inductance: '9[nH]'
+  chip_gap       : '200[um]'
+  chip_width     : '500[um]'
+  chip_height    : '600[um]'
+  # chip_inductance      : '1.4[nH]'
+  # chip_gap             : '220[um]' # 20[um]
+  # chip_width           : '250[um]' # 250[um]
+  # chip_height          : '2000[um]' # 400[um] (For chip_gap : 20[um], galvanic with 3240 ( ~4500 with 45 degree ? ) )
   chip_theta           : '0[deg]' # 0deg
   chip_fillet          : '10[um]'
   chip_pos_z_ratio     : '0.6'
   chip_pos_z           : 'chip_pos_z_ratio*coax_height'
   chip_pos_y           : 'coax_radius + 0.5*(outer_radius - coax_radius)'
+
   wafer_height         : '0.525[mm]'
   wafer_width          : '2[mm]'
   wafer_length         : '6[mm]'
